@@ -106,7 +106,7 @@ async function subscribeCommand(client, args) {
       const slot = parseInt(data.transaction.slot)
 
       if (slot > lastSlot) {
-        //console.log("SLOAT", data.transaction.slot)
+        console.log("SLOAT", data.transaction.slot)
         lastSlot = slot
       const now = Date.now()
       const blockTime = await connection.getBlockTime(slot)
