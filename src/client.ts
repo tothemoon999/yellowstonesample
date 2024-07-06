@@ -85,7 +85,7 @@ async function subscribeCommand(client, args) {
 
   // Handle updates
   stream.on("data", (data) => {
-    console.log("data", data);
+    console.log("data", Date.now(), data);
   });
 
   // Create subscribe request based on provided arguments.
