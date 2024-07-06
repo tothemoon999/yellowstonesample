@@ -85,6 +85,7 @@ async function subscribeCommand(client, args) {
       resolve();
     });
   });
+  
 
   // Handle updates
   stream.on("data", (data) => {
