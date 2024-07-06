@@ -5,14 +5,24 @@ import Client, {
   SubscribeRequestFilterAccountsFilter,
 } from "@triton-one/yellowstone-grpc";
 
-
+import { Connection } from '@solana/web3.js';
 import bs58 from 'bs58';
+
+
+const connection = new Connection( "http://192.168.1.100:81", {
+  wsEndpoint: "ws://192.168.1.100:82",
+  commitment: "processed",
+});
+
 
 async function main() {
   const args = parseCommandLineArgs();
 
 
   console.log('ARGS', args)
+
+  
+
 
   // Open connection.
   const client = new Client(args.endpoint, args.xToken, {
@@ -88,11 +98,17 @@ async function subscribeCommand(client, args) {
 
 
   // Handle updates
-  stream.on("data", (data) => {
+  stream.on("data", async (data) => {
     
+    const now = Date.now()
+    const blockTime = await connection.getBlockTime(data.transaction.slot)
+
+    console.log('Diff Time: ', now - (blockTime * 1000))
+
+
     //console.log("data", bs58.decode(data.transaction.transaction.signature) );
-    console.log("data", Date.now(), data.transaction);
-    console.log("data", Date.now(), data.transaction.slot);
+    //console.log("data", Date.now(), data.transaction);
+    //console.log("data", Date.now(), data.transaction.slot);
   });
 
   // Create subscribe request based on provided arguments.
