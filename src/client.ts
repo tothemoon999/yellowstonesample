@@ -5,6 +5,9 @@ import Client, {
   SubscribeRequestFilterAccountsFilter,
 } from "@triton-one/yellowstone-grpc";
 
+
+import bs58 from 'bs58';
+
 async function main() {
   const args = parseCommandLineArgs();
 
@@ -85,8 +88,9 @@ async function subscribeCommand(client, args) {
 
   // Handle updates
   stream.on("data", (data) => {
-    console.log("data", data.transaction.transaction );
-    console.log("data", Date.now(), data);
+    
+    console.log("data", bs58.decode(data.transaction.transaction.signature) );
+    console.log("data", Date.now(), data.transaction.slot);
   });
 
   // Create subscribe request based on provided arguments.
