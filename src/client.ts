@@ -103,7 +103,7 @@ async function subscribeCommand(client, args) {
 
     console.log("SLOAT", data.transaction.slot)
     const now = Date.now()
-    const blockTime = await connection.getBlockTime(data.transaction.slot)
+    const blockTime = await connection.getBlockTime(parseInt(data.transaction.slot))
 
     console.log('Diff Time: ', now - (blockTime * 1000))
 
