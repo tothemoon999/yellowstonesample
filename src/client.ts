@@ -100,6 +100,8 @@ async function subscribeCommand(client, args) {
   // Handle updates
   stream.on("data", async (data) => {
     
+
+    console.log("SLOAT", data.transaction.slot)
     const now = Date.now()
     const blockTime = await connection.getBlockTime(data.transaction.slot)
 
