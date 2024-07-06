@@ -9,7 +9,7 @@ import { Connection } from '@solana/web3.js';
 import bs58 from 'bs58';
 
 
-const connection = new Connection( "http://192.168.1.100:81", {
+const connection = new Connection("http://192.168.1.100:81", {
   wsEndpoint: "ws://192.168.1.100:82",
   commitment: "processed",
 });
@@ -21,7 +21,7 @@ async function main() {
 
   console.log('ARGS', args)
 
-  
+
 
 
   // Open connection.
@@ -99,23 +99,23 @@ async function subscribeCommand(client, args) {
   let lastSlot = 0
   // Handle updates
   stream.on("data", async (data) => {
-    
-    if (data.transaction.sloat) {
 
-      
+    if (data && data.transaction && data.transaction.sloat) {
+
+
       const slot = parseInt(data.transaction.slot)
 
       if (slot > lastSlot) {
         console.log("SLOAT", data.transaction.slot)
         lastSlot = slot
-      const now = Date.now()
-      const blockTime = await connection.getBlockTime(slot)
+        const now = Date.now()
+        const blockTime = await connection.getBlockTime(slot)
 
-      console.log('Diff Time: ', now - (blockTime * 1000))
+        console.log('Diff Time: ', now - (blockTime * 1000))
       }
-    
+
     }
-    
+
 
 
     //console.log("data", bs58.decode(data.transaction.transaction.signature) );
