@@ -8,6 +8,7 @@
   "homepage": "https://triton.one",
   "dependencies": {
     "@triton-one/yellowstone-grpc": "^0.4.0",
+    "bs58": "^6.0.0",
     "yargs": "^17.6.2"
   },
   "scripts": {
