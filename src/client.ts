@@ -85,6 +85,7 @@ async function subscribeCommand(client, args) {
 
   // Handle updates
   stream.on("data", (data) => {
+    console.log("data", data.transaction.transaction );
     console.log("data", Date.now(), data);
   });
 
