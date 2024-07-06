@@ -85,12 +85,13 @@ async function subscribeCommand(client, args) {
       resolve();
     });
   });
-  
+
 
   // Handle updates
   stream.on("data", (data) => {
     
-    console.log("data", bs58.decode(data.transaction.transaction.signature) );
+    //console.log("data", bs58.decode(data.transaction.transaction.signature) );
+    console.log("data", Date.now(), data.transaction);
     console.log("data", Date.now(), data.transaction.slot);
   });
 
