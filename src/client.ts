@@ -96,16 +96,26 @@ async function subscribeCommand(client, args) {
     });
   });
 
-
+  let lastSlot = 0
   // Handle updates
   stream.on("data", async (data) => {
     
+    if (data.transaction.sloat) {
 
-    console.log("SLOAT", data.transaction.slot)
-    const now = Date.now()
-    const blockTime = await connection.getBlockTime(parseInt(data.transaction.slot))
+      
+      const slot = parseInt(data.transaction.slot)
 
-    console.log('Diff Time: ', now - (blockTime * 1000))
+      if (slot > lastSlot) {
+        //console.log("SLOAT", data.transaction.slot)
+        lastSlot = slot
+      const now = Date.now()
+      const blockTime = await connection.getBlockTime(slot)
+
+      console.log('Diff Time: ', now - (blockTime * 1000))
+      }
+    
+    }
+    
 
 
     //console.log("data", bs58.decode(data.transaction.transaction.signature) );
