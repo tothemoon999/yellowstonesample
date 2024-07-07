@@ -100,7 +100,9 @@ async function subscribeCommand(client, args) {
   // Handle updates
   stream.on("data", async (data) => {
 
-    if (data && data.transaction && data.transaction.sloat) {
+    // console.log(data, data.transaction, data.transaction.slot)
+
+    if (data && data.transaction && data.transaction.slot) {
 
 
       const slot = parseInt(data.transaction.slot)
