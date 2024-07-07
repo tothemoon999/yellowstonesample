@@ -15,6 +15,7 @@ const connection = new Connection("http://192.168.1.100:81", {
 });
 
 
+export const sleep = (ms = 0) => new Promise((resolve) => setTimeout(resolve, ms));
 async function main() {
   const args = parseCommandLineArgs();
 
@@ -97,6 +98,20 @@ async function subscribeCommand(client, args) {
   });
 
   let lastSlot = 0
+
+
+  const getBlockTime = async (now, slot) => {
+
+    try {
+      const blockTime = await connection.getBlockTime(slot)
+
+      console.log('Diff Time: ', now - (blockTime * 1000))
+    } catch (err) {
+      await sleep(100)
+      getBlockTime(now, slot)
+    }
+
+  }
   // Handle updates
   stream.on("data", async (data) => {
 
@@ -111,9 +126,17 @@ async function subscribeCommand(client, args) {
         console.log("SLOAT", data.transaction.slot)
         lastSlot = slot
         const now = Date.now()
-        const blockTime = await connection.getBlockTime(slot)
 
-        console.log('Diff Time: ', now - (blockTime * 1000))
+        try {
+          const blockTime = await connection.getBlockTime(slot)
+
+          console.log('Diff Time: ', now - (blockTime * 1000))
+        } catch (err) {
+
+          await sleep(100);
+          await getBlockTime(now, slot)
+        }
+        
       }
 
     }
