@@ -122,22 +122,24 @@ async function subscribeCommand(client, args) {
 
       const slot = parseInt(data.transaction.slot)
 
-      if (slot > lastSlot) {
-        console.log("SLOAT", data.transaction.slot)
-        lastSlot = slot
-        const now = Date.now()
+      console.log(slot)
 
-        try {
-          const blockTime = await connection.getBlockTime(slot)
+      // if (slot > lastSlot) {
+      //   console.log("SLOAT", data.transaction.slot)
+      //   lastSlot = slot
+      //   const now = Date.now()
 
-          console.log('Diff Time: ', now - (blockTime * 1000))
-        } catch (err) {
+      //   try {
+      //     const blockTime = await connection.getBlockTime(slot)
 
-          await sleep(100);
-          await getBlockTime(now, slot)
-        }
+      //     console.log('Diff Time: ', now - (blockTime * 1000))
+      //   } catch (err) {
+
+      //     await sleep(100);
+      //     await getBlockTime(now, slot)
+      //   }
         
-      }
+      // }
 
     }
 
